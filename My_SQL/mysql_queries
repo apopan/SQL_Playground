@@ -1,0 +1,242 @@
+mysql> create database MYSQL_Queries;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show datadases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'datadases' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| apoorv             |
+| information_schema |
+| mysql              |
+| mysql_queries      |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use mysql_queries;
+Database changed
+mysql> create table Location (Location_Id,Regional_Group);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',Regional_Group)' at line 1
+mysql> create table Location (Location_Id int(10),Regional_Group char(20));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc Location;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Location_Id    | int      | YES  |     | NULL    |       |
+| Regional_Group | char(20) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Location (Location_Id,Regional_Group) values (122,'New York'),(123,'Dallas'),(124,'Chicago),(167,'Boston);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Boston)' at line 1
+mysql> insert into Location (Location_Id,Regional_Group) values (122,'New York'),(123,'Dallas'),(124,'Chicago'),(167,'Boston');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from Location;
++-------------+----------------+
+| Location_Id | Regional_Group |
++-------------+----------------+
+|         122 | New York       |
+|         123 | Dallas         |
+|         124 | Chicago        |
+|         167 | Boston         |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Department (Department_Id int(10),Name char(20),Location_Id int(10));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> insert into Department (Department_Id,Name,Location_Id) values (10,'Accounting',122),(20,'Research',124),(30,'Sale',123),(40,'Operation',167);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from Department;
++---------------+------------+-------------+
+| Department_Id | Name       | Location_Id |
++---------------+------------+-------------+
+|            10 | Accounting |         122 |
+|            20 | Research   |         124 |
+|            30 | Sale       |         123 |
+|            40 | Operation  |         167 |
++---------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> show create table Location;
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                            |
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Location | CREATE TABLE `location` (
+  `Location_Id` int DEFAULT NULL,
+  `Regional_Group` char(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table Location modify Location_Id int not null;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create table Location;
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                        |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Location | CREATE TABLE `location` (
+  `Location_Id` int NOT NULL,
+  `Regional_Group` char(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> show create table Department;
++------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table      | Create Table                                                                                                                                                                                        |
++------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Department | CREATE TABLE `department` (
+  `Department_Id` int DEFAULT NULL,
+  `Name` char(20) DEFAULT NULL,
+  `Location_Id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table Department modify Department_Id int not null;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create table Department;
++------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table      | Create Table                                                                                                                                                                                    |
++------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Department | CREATE TABLE `department` (
+  `Department_Id` int NOT NULL,
+  `Name` char(20) DEFAULT NULL,
+  `Location_Id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table Department add foreign key (Location_Id) references Location(Location_Id);
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'department_ibfk_1' in the referenced table 'location'
+mysql> desc Location;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Location_Id    | int      | NO   |     | NULL    |       |
+| Regional_Group | char(20) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table Location add primary key (Location_Id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Location;
++----------------+----------+------+-----+---------+-------+
+| Field          | Type     | Null | Key | Default | Extra |
++----------------+----------+------+-----+---------+-------+
+| Location_Id    | int      | NO   | PRI | NULL    |       |
+| Regional_Group | char(20) | YES  |     | NULL    |       |
++----------------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table Department add primary key (Department_Id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Department;
++---------------+----------+------+-----+---------+-------+
+| Field         | Type     | Null | Key | Default | Extra |
++---------------+----------+------+-----+---------+-------+
+| Department_Id | int      | NO   | PRI | NULL    |       |
+| Name          | char(20) | YES  |     | NULL    |       |
+| Location_Id   | int      | YES  |     | NULL    |       |
++---------------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Department add foreign key (Location_Id) references Loaction(Location_Id);
+ERROR 1824 (HY000): Failed to open the referenced table 'loaction'
+mysql>
+
+2-9-2022
+
+mysql> alter table Department add foreign key (Location_Id) references Location(Location_Id);
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> create table Job (Job_Id int(10),Function char(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function char(20))' at line 1
+mysql> create table Job (Job_Id int(10),Fun_ction char(20));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> insert into Job (Job_Id,Fun_ction) values (667,'Clerk'),(668,'Staff'),(669,'Analyst'),(670,'Salesperson'),(671,'Manager'),(672,'President');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from Job;
++--------+-------------+
+| Job_Id | Fun_ction   |
++--------+-------------+
+|    667 | Clerk       |
+|    668 | Staff       |
+|    669 | Analyst     |
+|    670 | Salesperson |
+|    671 | Manager     |
+|    672 | President   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> create table Employee (Employee_Id int(10),Lastname char(20),Firstname char(20),Middlename char(5),Job_Id int(10),Manager_Id int(10),Hire_date date,Salary int(10),Department_id int(10));
+Query OK, 0 rows affected, 5 warnings (0.02 sec)
+
+mysql> desc Employee;
++---------------+----------+------+-----+---------+-------+
+| Field         | Type     | Null | Key | Default | Extra |
++---------------+----------+------+-----+---------+-------+
+| Employee_Id   | int      | YES  |     | NULL    |       |
+| Lastname      | char(20) | YES  |     | NULL    |       |
+| Firstname     | char(20) | YES  |     | NULL    |       |
+| Middlename    | char(5)  | YES  |     | NULL    |       |
+| Job_Id        | int      | YES  |     | NULL    |       |
+| Manager_Id    | int      | YES  |     | NULL    |       |
+| Hire_date     | date     | YES  |     | NULL    |       |
+| Salary        | int      | YES  |     | NULL    |       |
+| Department_id | int      | YES  |     | NULL    |       |
++---------------+----------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> insert into Employee (Employee_Id,Lastname,Firstname,Middlename,Job_Id,Manager_Id,Hire_date,Salary,Department_Id) values
+    -> (7369,'Smith','Jon','Q',667,7902,1984-12-17,800,10)
+    -> (7499,'Allen','Kevin','J',670,7698,1985-02-20,1600,20)
+    -> (7505,'Doyle','Jean','K',671,7839,1985-04-04,2850,20)
+    -> (7506,'Dennis,'Lynn','S',671,7839,1985-05-15,2750,30),
+    '> (7507,'Baker','Leslie','D',671,7839,1985-06-10,2200,40),
+    '> (7251,'Wark','Cynthia','D',670,7698,1985-02-22,1250,10);
+    '> ;
+    '> ^C
+mysql> insert into Employee (Employee_Id,Lastname,Firstname,Middlename,Job_Id,Manager_Id,Hire_date,Salary,Department_Id) values (7369,'Smith','Jon','Q',667,7902,1984-12-17,800,10),(7499,'Allen','Kevin','J',670,7698,1985-02-20,1600,20),(7505,'Doyle','Jean','K',671,7839,1985-04-04,2850,20),(7506,'Dennis,'Lynn','S',671,7839,1985-05-15,2750,30),(7507,'Baker','Leslie','D',671,7839,1985-06-10,2200,40),(7251,'Wark','Cynthia','D',670,7698,1985-02-22,1250,10);
+    '> ;^C
+mysql> insert into Employee (Employee_Id,Lastname,Firstname,Middlename,Job_Id,Manager_Id,Hire_date,Salary,Department_Id) values (7369,'Smith','Jon','Q',667,7902,1984-12-17,800,10),(7499,'Allen','Kevin','J',670,7698,1985-02-20,1600,20),(7505,'Doyle','Jean','K',671,7839,1985-04-04,2850,20),(7506,'Dennis,'Lynn','S',671,7839,1985-05-15,2750,30),(7507,'Baker','Leslie','D',671,7839,1985-06-10,2200,40),(7251,'Wark','Cynthia','D',670,7698,1985-02-22,1250,10);
+    '> ^C
+mysql> insert into Employee (Employee_Id,Lastname,Firstname,Middlename,Job_Id,Manager_Id,Hire_date,Salary,Department_Id) values (7369,'Smith','Jon','Q',667,7902,1984-12-17,800,10),(7499,'Allen','Kevin','J',670,7698,1985-02-20,1600,20),(7505,'Doyle','Jean','K',671,7839,1985-04-04,2850,20),(7506,'Dennis','Lynn','S',671,7839,1985-05-15,2750,30),(7507,'Baker','Leslie','D',671,7839,1985-06-10,2200,40),(7251,'Wark','Cynthia','D',670,7698,1985-02-22,1250,10);
+ERROR 1292 (22007): Incorrect date value: '1955' for column 'Hire_date' at row 1
+mysql> insert into Employee (Employee_Id,Lastname,Firstname,Middlename,Job_Id,Manager_Id,Hire_date,Salary,Department_Id) values (7369,'Smith','Jon','Q',667,7902,'1984-12-17',800,10),(7499,'Allen','Kevin','J',670,7698,'1985-02-20',1600,20),(7505,'Doyle','Jean','K',671,7839,'1985-04-04',2850,20),(7506,'Dennis','Lynn','S',671,7839,'1985-05-15',2750,30),(7507,'Baker','Leslie','D',671,7839,'1985-06-10',2200,40),(7251,'Wark','Cynthia','D',670,7698,'1985-02-22',1250,10);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> alter table add primary key(Job_Id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add primary key(Job_Id)' at line 1
+mysql> alter table Job add primary key(Job_Id);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Employee add primary key(Employee_Id);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
