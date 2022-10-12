@@ -1,0 +1,655 @@
+Assignment 2B
+
+(base) mmcoe@mmcoe-System-Product-Name:~$ mysql -u root -p;
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database College;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Use College;
+Database changed
+mysql> show databases College;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'College' at line 1
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| College        	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| shantanu       	|
+| sys            	|
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use College;
+Database changed
+mysql> drop database College;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| shantanu       	|
+| sys            	|
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> create database Customer;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| Customer       	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| shantanu       	|
+| sys            	|
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use Customer;
+Database changed
+mysql> create table customerinfo (cno INT(5), cname CHAR(20), price INT(5), PRIMARY KEY (cno));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc customeinfo
+	-> ;
+ERROR 1146 (42S02): Table 'Customer.customeinfo' doesn't exist
+mysql> desc cumstomerinfo;
+ERROR 1146 (42S02): Table 'Customer.cumstomerinfo' doesn't exist
+mysql> select *from Customer;
+ERROR 1146 (42S02): Table 'Customer.Customer' doesn't exist
+mysql> desc customerinfo;
++-------+----------+------+-----+---------+-------+
+| Field | Type 	| Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| cno   | int(5)   | NO   | PRI | NULL	|   	|
+| cname | char(20) | YES  | 	| NULL	|   	|
+| price | int(5)   | YES  | 	| NULL	|   	|
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into customerinfo values (1,'P',200);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc customerinfo;
++-------+----------+------+-----+---------+-------+
+| Field | Type 	| Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| cno   | int(5)   | NO   | PRI | NULL	|   	|
+| cname | char(20) | YES  | 	| NULL	|   	|
+| price | int(5)   | YES  | 	| NULL	|   	|
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select *from customerinfo;
++-----+-------+-------+
+| cno | cname | price |
++-----+-------+-------+
+|   1 | P 	|   200 |
++-----+-------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into customerinfo values (2,'Q',300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customerinfo (3,'S',500);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3,'S',500)' at line 1
+mysql> insert into customerinfo values (4,'R',400);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from customerinfo;
++-----+-------+-------+
+| cno | cname | price |
++-----+-------+-------+
+|   1 | P 	|   200 |
+|   2 | Q 	|   300 |
+|   4 | R 	|   400 |
++-----+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into customerinfo (cno, cname, price) values (5,'S',150),(6,'Z',50);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select *from customerinfo;
++-----+-------+-------+
+| cno | cname | price |
++-----+-------+-------+
+|   1 | P 	|   200 |
+|   2 | Q 	|   300 |
+|   4 | R 	|   400 |
+|   5 | S 	|   150 |
+|   6 | Z 	|	50 |
++-----+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ^C
+mysql>
+
+ASSIGNMENT 2B
+
+
+mysql> create database College;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Use College;
+Database changed
+mysql> desc College;
+ERROR 1146 (42S02): Table 'College.College' doesn't exist
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| College        	|
+| Customer       	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| shantanu       	|
+| sys            	|
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> Use College;
+Database changed
+mysql> create table Student (roll_no varchar(10), name char(50), division char(5), branch char(10), city char(10), marks int(5));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select *from College;
+ERROR 1146 (42S02): Table 'College.College' doesn't exist
+mysql> select *from Student;
+Empty set (0.00 sec)
+
+mysql> desc Student;
++----------+-------------+------+-----+---------+-------+
+| Field	| Type    	| Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| roll_no  | varchar(10) | YES  | 	| NULL	|   	|
+| name 	| char(50)	| YES  | 	| NULL	|   	|
+| division | char(5) 	| YES  | 	| NULL	|   	|
+| branch   | char(10)	| YES  | 	| NULL	|   	|
+| city 	| char(10)	| YES  | 	| NULL	|   	|
+| marks	| int(5)  	| YES  | 	| NULL	|   	|
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into Student values (TC152,'Apoorv','TE1','Computer','Pune',76);
+ERROR 1054 (42S22): Unknown column 'TC152' in 'field list'
+mysql> insert into Student values ('TC152','Apoorv','TE1','Computer','Pune',76);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Student;
++---------+--------+----------+----------+------+-------+
+| roll_no | name   | division | branch   | city | marks |
++---------+--------+----------+----------+------+-------+
+| TC152   | Apoorv | TE1  	| Computer | Pune |	76 |
++---------+--------+----------+----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+
+Assignment 2B 26-07-2022
+
+
+
+
+(base) mmcoe@mmcoe-System-Product-Name:~$ mysql -u root -p;
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| CLG            	|
+| College        	|
+| Customer       	|
+| custproduct    	|
+| information    	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| products       	|
+| shantanu       	|
+| sys            	|
+| tanika         	|
+| te2            	|
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> Use College;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select *from Student;
++---------+--------+----------+----------+------+-------+
+| roll_no | name   | division | branch   | city | marks |
++---------+--------+----------+----------+------+-------+
+| TC152   | Apoorv | TE1  	| Computer | Pune |	76 |
++---------+--------+----------+----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into Student values ('TC146','Atharv','TE1','Computer','Ratnagiri',85),
+	-> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into Student values ('TC146','Atharv','TE1','Computer','Ratnagiri',85),
+	-> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into Student values ('TC146','Atharv','TE1','Computer','Ratnagiri',85);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Student values ('TC14r','Deven','TE1','Computer','Pune',90);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Update Student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> Update Student Set roll_no='TC147' where name='Deven';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from Student;
++---------+--------+----------+----------+-----------+-------+
+| roll_no | name   | division | branch   | city  	| marks |
++---------+--------+----------+----------+-----------+-------+
+| TC152   | Apoorv | TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv | TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven  | TE1  	| Computer | Pune  	|	90 |
++---------+--------+----------+----------+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Student values ('BC122','Kshitij','BE1','Computer','Satara',47);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Student values ('BC166','Rushikesh','BE2','Computer','Solapur',44);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Student values ('TC144','Roger','TE2','IT','Pune',98);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Student values ('TC167','Shardul','TE2','Computer','Pune',93);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC122   | Kshitij   | BE1  	| Computer | Satara	|	47 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| IT   	| Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
++---------+-----------+----------+----------+-----------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into Student values ('TC124','Jaydatta','TE2','Computer','Pune',97);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Student values ('TC137','Vivek','TE2','Computer','Pune',82);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Student values ('TC137','Alo0k','TE2','Computer','Pune',82);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete form Student where name='Alo0k';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Student where name='Alo0k'' at line 1
+mysql> delete from Student where name='Alo0k';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC122   | Kshitij   | BE1  	| Computer | Satara	|	47 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| IT   	| Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta  | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek 	| TE2  	| Computer | Pune  	|	82 |
++---------+-----------+----------+----------+-----------+-------+
+9 rows in set (0.00 sec)
+
+mysql> insert into Student values ('TC143','Alok','TE1','Computer','Pune',40);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select name and city from Student;
++---------------+
+| name and city |
++---------------+
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
+|         	0 |
++---------------+
+10 rows in set, 10 warnings (0.00 sec)
+
+mysql> select name,city from Student;
++-----------+-----------+
+| name  	| city  	|
++-----------+-----------+
+| Apoorv	| Pune  	|
+| Atharv	| Ratnagiri |
+| Deven 	| Pune  	|
+| Kshitij   | Satara	|
+| Rushikesh | Solapur   |
+| Roger 	| Pune  	|
+| Shardul   | Pune  	|
+| Jaydatta  | Pune  	|
+| Vivek 	| Pune  	|
+| Alok  	| Pune  	|
++-----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select distinct (name) from Student;
++-----------+
+| name  	|
++-----------+
+| Apoorv	|
+| Atharv	|
+| Deven 	|
+| Kshitij   |
+| Rushikesh |
+| Roger 	|
+| Shardul   |
+| Jaydatta  |
+| Vivek 	|
+| Alok  	|
++-----------+
+10 rows in set (0.00 sec)
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC122   | Kshitij   | BE1  	| Computer | Satara	|	47 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| IT   	| Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta  | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek 	| TE2  	| Computer | Pune  	|	82 |
+| TC143   | Alok  	| TE1  	| Computer | Pune  	|	40 |
++---------+-----------+----------+----------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select *from Student where marks>75;
++---------+----------+----------+----------+-----------+-------+
+| roll_no | name 	| division | branch   | city  	| marks |
++---------+----------+----------+----------+-----------+-------+
+| TC152   | Apoorv   | TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv   | TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven	| TE1  	| Computer | Pune  	|	90 |
+| TC144   | Roger	| TE2  	| IT   	| Pune  	|	98 |
+| TC167   | Shardul  | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek	| TE2  	| Computer | Pune  	|	82 |
++---------+----------+----------+----------+-----------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select *from Student where name='S%';
+Empty set (0.00 sec)
+
+mysql> select name from Student where name='S%';
+Empty set (0.00 sec)
+
+mysql> select *from Student where name like 'S%';
++---------+---------+----------+----------+------+-------+
+| roll_no | name	| division | branch   | city | marks |
++---------+---------+----------+----------+------+-------+
+| TC167   | Shardul | TE2  	| Computer | Pune |	93 |
++---------+---------+----------+----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select *from Student where marks between 70 to 80;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to 80' at line 1
+mysql> select *from Student where marks between 70 to 80;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to 80' at line 1
+mysql> select * from Student where marks between 70 to 80;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to 80' at line 1
+mysql> select *from Student where marks>70 and marks<80;
++---------+--------+----------+----------+------+-------+
+| roll_no | name   | division | branch   | city | marks |
++---------+--------+----------+----------+------+-------+
+| TC152   | Apoorv | TE1  	| Computer | Pune |	76 |
++---------+--------+----------+----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select *from Student where branch='Computer' and city='Pune';
++---------+----------+----------+----------+------+-------+
+| roll_no | name 	| division | branch   | city | marks |
++---------+----------+----------+----------+------+-------+
+| TC152   | Apoorv   | TE1  	| Computer | Pune |	76 |
+| TC147   | Deven	| TE1  	| Computer | Pune |	90 |
+| TC167   | Shardul  | TE2  	| Computer | Pune |	93 |
+| TC124   | Jaydatta | TE2  	| Computer | Pune |	97 |
+| TC137   | Vivek	| TE2  	| Computer | Pune |	82 |
+| TC143   | Alok 	| TE1  	| Computer | Pune |	40 |
++---------+----------+----------+----------+------+-------+
+6 rows in set (0.00 sec)
+
+mysql> Update Student set branch='Computer' where roll_no='TC144';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC122   | Kshitij   | BE1  	| Computer | Satara	|	47 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| Computer | Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta  | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek 	| TE2  	| Computer | Pune  	|	82 |
+| TC143   | Alok  	| TE1  	| Computer | Pune  	|	40 |
++---------+-----------+----------+----------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> delete from Student where division='BE1' and division='BE2';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC122   | Kshitij   | BE1  	| Computer | Satara	|	47 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| Computer | Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta  | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek 	| TE2  	| Computer | Pune  	|	82 |
+| TC143   | Alok  	| TE1  	| Computer | Pune  	|	40 |
++---------+-----------+----------+----------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> delete from Student where division='BE1';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Student;
++---------+-----------+----------+----------+-----------+-------+
+| roll_no | name  	| division | branch   | city  	| marks |
++---------+-----------+----------+----------+-----------+-------+
+| TC152   | Apoorv	| TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv	| TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven 	| TE1  	| Computer | Pune  	|	90 |
+| BC166   | Rushikesh | BE2  	| Computer | Solapur   |	44 |
+| TC144   | Roger 	| TE2  	| Computer | Pune  	|	98 |
+| TC167   | Shardul   | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta  | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek 	| TE2  	| Computer | Pune  	|	82 |
+| TC143   | Alok  	| TE1  	| Computer | Pune  	|	40 |
++---------+-----------+----------+----------+-----------+-------+
+9 rows in set (0.00 sec)
+
+mysql> delete from Student where division='BE2';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Student;
++---------+----------+----------+----------+-----------+-------+
+| roll_no | name 	| division | branch   | city  	| marks |
++---------+----------+----------+----------+-----------+-------+
+| TC152   | Apoorv   | TE1  	| Computer | Pune  	|	76 |
+| TC146   | Atharv   | TE1  	| Computer | Ratnagiri |	85 |
+| TC147   | Deven	| TE1  	| Computer | Pune  	|	90 |
+| TC144   | Roger	| TE2  	| Computer | Pune  	|	98 |
+| TC167   | Shardul  | TE2  	| Computer | Pune  	|	93 |
+| TC124   | Jaydatta | TE2  	| Computer | Pune  	|	97 |
+| TC137   | Vivek	| TE2  	| Computer | Pune  	|	82 |
+| TC143   | Alok 	| TE1  	| Computer | Pune  	|	40 |
++---------+----------+----------+----------+-----------+-------+
+8 rows in set (0.00 sec)
+
+mysql> create table TE_Students as select roll_no,name from Students;
+ERROR 1146 (42S02): Table 'College.Students' doesn't exist
+mysql> create table TE_Students as select roll_no,name from Student;
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select *from TE_Students;
++---------+----------+
+| roll_no | name 	|
++---------+----------+
+| TC152   | Apoorv   |
+| TC146   | Atharv   |
+| TC147   | Deven	|
+| TC144   | Roger	|
+| TC167   | Shardul  |
+| TC124   | Jaydatta |
+| TC137   | Vivek	|
+| TC143   | Alok 	|
++---------+----------+
+8 rows in set (0.01 sec)
+
+mysql> select roll_no from Student union select roll_no from TE_Students;
++---------+
+| roll_no |
++---------+
+| TC152   |
+| TC146   |
+| TC147   |
+| TC144   |
+| TC167   |
+| TC124   |
+| TC137   |
+| TC143   |
++---------+
+8 rows in set (0.00 sec)
+
+mysql> select upper(name) from Student;
++-------------+
+| upper(name) |
++-------------+
+| APOORV  	|
+| ATHARV  	|
+| DEVEN   	|
+| ROGER   	|
+| SHARDUL 	|
+| JAYDATTA	|
+| VIVEK   	|
+| ALOK    	|
++-------------+
+8 rows in set (0.00 sec)
+
+mysql> select hex(marks) from Student;
++------------+
+| hex(marks) |
++------------+
+| 4C     	|
+| 55     	|
+| 5A     	|
+| 62     	|
+| 5D     	|
+| 61     	|
+| 52     	|
+| 28     	|
++------------+
+8 rows in set (0.00 sec)
+
+mysql> select bin(marks) from Student;
++------------+
+| bin(marks) |
++------------+
+| 1001100	|
+| 1010101	|
+| 1011010	|
+| 1100010	|
+| 1011101	|
+| 1100001	|
+| 1010010	|
+| 101000 	|
++------------+
+8 rows in set (0.01 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
