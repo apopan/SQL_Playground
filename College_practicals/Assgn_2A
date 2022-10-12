@@ -1,0 +1,206 @@
+Assignment 2A
+
+
+
+
+(base) mmcoe@mmcoe-System-Product-Name:~$ mysql -u root -p;
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| CLG            	|
+| College        	|
+| Customer       	|
+| custproduct    	|
+| information    	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| products       	|
+| shantanu       	|
+| sys            	|
+| tanika         	|
+| te2            	|
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> create database CUSTOMERS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE CUSTOMERS
+Database changed
+mysql> USE CUSTOMERS;
+Database changed
+mysql> create table customers(cust_id varchar(10), cust_name char(50), product char(50), quantity int(5), total_price int(10));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select *from customers;
+Empty set (0.00 sec)
+
+mysql> desccustomers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desccustomers' at line 1
+mysql> desc customers;
++-------------+-------------+------+-----+---------+-------+
+| Field   	| Type    	| Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| cust_id 	| varchar(10) | YES  | 	| NULL	|   	|
+| cust_name   | char(50)	| YES  | 	| NULL	|   	|
+| product 	| char(50)	| YES  | 	| NULL	|   	|
+| quantity	| int(5)  	| YES  | 	| NULL	|   	|
+| total_price | int(10) 	| YES  | 	| NULL	|   	|
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> Alter table customers add primary key(cust_id);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Alter table customers add cust_id int auto_increment;
+ERROR 1060 (42S21): Duplicate column name 'cust_id'
+mysql> Alter table customers modify cust_id int auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customers;
++-------------+----------+------+-----+---------+----------------+
+| Field   	| Type 	| Null | Key | Default | Extra      	|
++-------------+----------+------+-----+---------+----------------+
+| cust_id 	| int(11)  | NO   | PRI | NULL	| auto_increment |
+| cust_name   | char(50) | YES  | 	| NULL	|            	|
+| product 	| char(50) | YES  | 	| NULL	|            	|
+| quantity	| int(5)   | YES  | 	| NULL	|            	|
+| total_price | int(10)  | YES  | 	| NULL	|            	|
++-------------+----------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+28-08-2022
+
+
+mysql> show databases;
++--------------------+
+| Database       	|
++--------------------+
+| information_schema |
+| CLG            	|
+| CUSTOMERS      	|
+| College        	|
+| Customer       	|
+| custproduct    	|
+| information    	|
+| mmcoe          	|
+| mysql          	|
+| performance_schema |
+| products       	|
+| shantanu       	|
+| sys            	|
+| tanika         	|
+| te2            	|
++--------------------+
+15 rows in set (0.00 sec)
+
+mysql> Use CUSTOMERS;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select *from customers;
+Empty set (0.00 sec)
+
+mysql> desc customers;
++-------------+----------+------+-----+---------+----------------+
+| Field   	| Type 	| Null | Key | Default | Extra      	|
++-------------+----------+------+-----+---------+----------------+
+| cust_id 	| int(11)  | NO   | PRI | NULL	| auto_increment |
+| cust_name   | char(50) | YES  | 	| NULL	|            	|
+| product 	| char(50) | YES  | 	| NULL	|            	|
+| quantity	| int(5)   | YES  | 	| NULL	|            	|
+| total_price | int(10)  | YES  | 	| NULL	|            	|
++-------------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> insert into customers (cust_id,cust_name,product, quantity,total_price) values (1,'Deven','Vadapav',5,75),('Apoorv','Bhel',1,35),('Atharv','Burger',2,150),('Shardul','Sandwich',3,90),('Jaydatta','Kachori',5,100);
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> insert into customers (cust_name,product, quantity,total_price) values ('Deven','Vadapav',5,75),('Apoorv','Bhel',1,35),('Atharv','Burger',2,150),('Shardul','Sandwich',3,90),('Jaydatta','Kachori',5,100);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from customers;
++---------+-----------+----------+----------+-------------+
+| cust_id | cust_name | product  | quantity | total_price |
++---------+-----------+----------+----------+-------------+
+|   	1 | Deven 	| Vadapav  |    	5 |      	75 |
+|   	2 | Apoorv	| Bhel 	|    	1 |      	35 |
+|   	3 | Atharv	| Burger   |    	2 |     	150 |
+|   	4 | Shardul   | Sandwich |    	3 |      	90 |
+|   	5 | Jaydatta  | Kachori  |    	5 |     	100 |
++---------+-----------+----------+----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> Alter table customers add price_per_quantity
+	-> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> Alter table customers add price_per_quantity;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> Alter table customers add price_per_quantity float;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from customers;
++---------+-----------+----------+----------+-------------+--------------------+
+| cust_id | cust_name | product  | quantity | total_price | price_per_quantity |
++---------+-----------+----------+----------+-------------+--------------------+
+|   	1 | Deven 	| Vadapav  |    	5 |      	75 |           	NULL |
+|   	2 | Apoorv	| Bhel 	|    	1 |      	35 |           	NULL |
+|   	3 | Atharv	| Burger   |    	2 |     	150 |           	NULL |
+|   	4 | Shardul   | Sandwich |    	3 |      	90 |           	NULL |
+|   	5 | Jaydatta  | Kachori  |    	5 |     	100 |           	NULL |
++---------+-----------+----------+----------+-------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> create view Cust_view as select cust_id,cust_name from customers;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Alter view cust_view as selsct cust_id,product,total_price from customers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selsct cust_id,product,total_price from customers' at line 1
+mysql> Alter view Cust_view as selsct cust_id,product,total_price from customers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selsct cust_id,product,total_price from customers' at line 1
+mysql> Alter view Cust_view as select cust_id,product,total_price from customers;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> drop Cust_view;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Cust_view' at line 1
+mysql> drop view Cust_viewe
+	-> ;
+ERROR 1051 (42S02): Unknown table 'CUSTOMERS.Cust_viewe'
+mysql> drop view Cust_view;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create index Cust_index on customers (cust_name);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> drop index Cust_index on customers;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table customers rename Alias;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> commit
