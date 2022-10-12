@@ -1,0 +1,311 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| apoorv             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use apoorv;
+Database changed
+mysql> create table Customers (ID int(10),name char(30),age int(5),address varchar(100),salary int(10));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> create table Orders (O_ID int(10),o_date date,customer_id int(10),amount int(10));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> insert into Customers (ID,name,age,address,salary) values (1,'Apoorv',20,'Kothrud, Pune-38.',10000),(2,'Satish',54,'Nashik-11',100000),(3,'Rujuta',35,'Jalgoan-42',50000),(4,'Deven',22,'Nagpur',80000),(5,'Shardul',21,'Mumbai',25000);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into Orders (O_ID,o_date,customer_id,amount) values (376,'2022-03-11',33,4000),(212,'2021-12-25',3,2500),(101,'2020-10-16',12,10000),(618,'2022-07-12',5,500),(983,'2022-01-14',22,1250);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from Customers;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    2 | Satish  |   54 | Nashik-11         | 100000 |
+|    3 | Rujuta  |   35 | Jalgoan-42        |  50000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select *from Orders;
++------+------------+-------------+--------+
+| O_ID | o_date     | customer_id | amount |
++------+------------+-------------+--------+
+|  376 | 2022-03-11 |          33 |   4000 |
+|  212 | 2021-12-25 |           3 |   2500 |
+|  101 | 2020-10-16 |          12 |  10000 |
+|  618 | 2022-07-12 |           5 |    500 |
+|  983 | 2022-01-14 |          22 |   1250 |
++------+------------+-------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders inner join Customers;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    1 | Apoorv  |   1250 | 2022-01-14 |
+|    1 | Apoorv  |    500 | 2022-07-12 |
+|    1 | Apoorv  |  10000 | 2020-10-16 |
+|    1 | Apoorv  |   2500 | 2021-12-25 |
+|    1 | Apoorv  |   4000 | 2022-03-11 |
+|    2 | Satish  |   1250 | 2022-01-14 |
+|    2 | Satish  |    500 | 2022-07-12 |
+|    2 | Satish  |  10000 | 2020-10-16 |
+|    2 | Satish  |   2500 | 2021-12-25 |
+|    2 | Satish  |   4000 | 2022-03-11 |
+|    3 | Rujuta  |   1250 | 2022-01-14 |
+|    3 | Rujuta  |    500 | 2022-07-12 |
+|    3 | Rujuta  |  10000 | 2020-10-16 |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    3 | Rujuta  |   4000 | 2022-03-11 |
+|    4 | Deven   |   1250 | 2022-01-14 |
+|    4 | Deven   |    500 | 2022-07-12 |
+|    4 | Deven   |  10000 | 2020-10-16 |
+|    4 | Deven   |   2500 | 2021-12-25 |
+|    4 | Deven   |   4000 | 2022-03-11 |
+|    5 | Shardul |   1250 | 2022-01-14 |
+|    5 | Shardul |    500 | 2022-07-12 |
+|    5 | Shardul |  10000 | 2020-10-16 |
+|    5 | Shardul |   2500 | 2021-12-25 |
+|    5 | Shardul |   4000 | 2022-03-11 |
++------+---------+--------+------------+
+25 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders inner join Customers on Customers.ID=Orders.customer_id
+    -> ;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    5 | Shardul |    500 | 2022-07-12 |
++------+---------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders inner join Customers select as distinct(ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select as distinct(ID)' at line 1
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders left join Customers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders left join Customers on Customers.ID=Orders.customer_id group by Customers.ID;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+| NULL | NULL    |   4000 | 2022-03-11 |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    5 | Shardul |    500 | 2022-07-12 |
++------+---------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders left join Customers on Customers.ID=Orders.customer_id;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+| NULL | NULL    |   4000 | 2022-03-11 |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+| NULL | NULL    |  10000 | 2020-10-16 |
+|    5 | Shardul |    500 | 2022-07-12 |
+| NULL | NULL    |   1250 | 2022-01-14 |
++------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders right join Customers on Customers.ID=Orders.customer_id;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    1 | Apoorv  |   NULL | NULL       |
+|    2 | Satish  |   NULL | NULL       |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    4 | Deven   |   NULL | NULL       |
+|    5 | Shardul |    500 | 2022-07-12 |
++------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders left join Customers on Customers.distinct(ID)=Orders.distinct(customer_id);
+ERROR 1630 (42000): FUNCTION customers.distinct does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders right join Customers on Customers.ID=Orders.customer_id;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    1 | Apoorv  |   NULL | NULL       |
+|    2 | Satish  |   NULL | NULL       |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    4 | Deven   |   NULL | NULL       |
+|    5 | Shardul |    500 | 2022-07-12 |
++------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders full outer join Customers on Customers.ID=Orders.customer_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'outer join Customers on Customers.ID=Orders.customer_id' at line 1
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders right join Customers on Customers.ID=Orders.customer_id union select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders left join Customers on Customers.ID=Orders.customer_id;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    1 | Apoorv  |   NULL | NULL       |
+|    2 | Satish  |   NULL | NULL       |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    4 | Deven   |   NULL | NULL       |
+|    5 | Shardul |    500 | 2022-07-12 |
+| NULL | NULL    |   4000 | 2022-03-11 |
+| NULL | NULL    |  10000 | 2020-10-16 |
+| NULL | NULL    |   1250 | 2022-01-14 |
++------+---------+--------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+    -> FROM Customers A, Customers B
+    -> WHERE A.CustomerID <> B.CustomerID
+    -> AND A.City = B.City
+    -> ;
+ERROR 1054 (42S22): Unknown column 'A.CustomerName' in 'field list'
+mysql> SELECT A.name AS name1, B.name AS name2, A.address from Customers A, Customers B where A.ID <> B.ID and A.address=B.address order by A.address;
+Empty set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders cross join Customers;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    1 | Apoorv  |   1250 | 2022-01-14 |
+|    1 | Apoorv  |    500 | 2022-07-12 |
+|    1 | Apoorv  |  10000 | 2020-10-16 |
+|    1 | Apoorv  |   2500 | 2021-12-25 |
+|    1 | Apoorv  |   4000 | 2022-03-11 |
+|    2 | Satish  |   1250 | 2022-01-14 |
+|    2 | Satish  |    500 | 2022-07-12 |
+|    2 | Satish  |  10000 | 2020-10-16 |
+|    2 | Satish  |   2500 | 2021-12-25 |
+|    2 | Satish  |   4000 | 2022-03-11 |
+|    3 | Rujuta  |   1250 | 2022-01-14 |
+|    3 | Rujuta  |    500 | 2022-07-12 |
+|    3 | Rujuta  |  10000 | 2020-10-16 |
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    3 | Rujuta  |   4000 | 2022-03-11 |
+|    4 | Deven   |   1250 | 2022-01-14 |
+|    4 | Deven   |    500 | 2022-07-12 |
+|    4 | Deven   |  10000 | 2020-10-16 |
+|    4 | Deven   |   2500 | 2021-12-25 |
+|    4 | Deven   |   4000 | 2022-03-11 |
+|    5 | Shardul |   1250 | 2022-01-14 |
+|    5 | Shardul |    500 | 2022-07-12 |
+|    5 | Shardul |  10000 | 2020-10-16 |
+|    5 | Shardul |   2500 | 2021-12-25 |
+|    5 | Shardul |   4000 | 2022-03-11 |
++------+---------+--------+------------+
+25 rows in set (0.00 sec)
+
+mysql> select Customers.ID,Customers.name,Orders.amount,Orders.o_date from Orders cross join Customers on Customers.ID=Orders.customer_id;
++------+---------+--------+------------+
+| ID   | name    | amount | o_date     |
++------+---------+--------+------------+
+|    3 | Rujuta  |   2500 | 2021-12-25 |
+|    5 | Shardul |    500 | 2022-07-12 |
++------+---------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from Customers where ID in (select ID from Customers where salary>20000);
++------+---------+------+------------+--------+
+| ID   | name    | age  | address    | salary |
++------+---------+------+------------+--------+
+|    2 | Satish  |   54 | Nashik-11  | 100000 |
+|    3 | Rujuta  |   35 | Jalgoan-42 |  50000 |
+|    4 | Deven   |   22 | Nagpur     |  80000 |
+|    5 | Shardul |   21 | Mumbai     |  25000 |
++------+---------+------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> create table cust_bkp as select *from Customers;
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from cust_bkp;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    2 | Satish  |   54 | Nashik-11         | 100000 |
+|    3 | Rujuta  |   35 | Jalgoan-42        |  50000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update Customers set salary=salary*1.1 where ID in (select ID from Customers where age>24);
+ERROR 1093 (HY000): You can't specify target table 'Customers' for update in FROM clause
+mysql> update Customers set salary=salary*1.1 where ID in (select ID from cust_bkp where age>24);
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from Customers;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    2 | Satish  |   54 | Nashik-11         | 110000 |
+|    3 | Rujuta  |   35 | Jalgoan-42        |  55000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select *from cust_bkp;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    2 | Satish  |   54 | Nashik-11         | 100000 |
+|    3 | Rujuta  |   35 | Jalgoan-42        |  50000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Customers where age in (select age from cust_bkp where age>26);
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select *from Customers;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select *from cust_bkp;
++------+---------+------+-------------------+--------+
+| ID   | name    | age  | address           | salary |
++------+---------+------+-------------------+--------+
+|    1 | Apoorv  |   20 | Kothrud, Pune-38. |  10000 |
+|    2 | Satish  |   54 | Nashik-11         | 100000 |
+|    3 | Rujuta  |   35 | Jalgoan-42        |  50000 |
+|    4 | Deven   |   22 | Nagpur            |  80000 |
+|    5 | Shardul |   21 | Mumbai            |  25000 |
++------+---------+------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+
