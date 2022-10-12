@@ -1,0 +1,95 @@
+mmcoe@mmcoe-System-Product-Name:~$ sudo service oracle-xe start
+[sudo] password for mmcoe:
+mmcoe@mmcoe-System-Product-Name:~$ sqlplus sys as sysdba
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Sep 22 10:39:16 2022
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password:
+[1]+  Stopped             	sqlplus sys as sysdba
+mmcoe@mmcoe-System-Product-Name:~$ sudo service oracle-xe start
+mmcoe@mmcoe-System-Product-Name:~$ sqlplus sys
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Sep 22 10:39:47 2022
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: mmcoe
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> drop table library;
+
+Table dropped.
+
+SQL> create table library(bno number,name varchar2(20),author varchar2(20),allowed_days number);
+
+Table created.
+
+SQL> insert into library values(1,'DBMS','Korth',5);
+insert into library values(2,'DM','Kamber',15);
+insert into library values(3,'BI','Kamber',10);
+
+1 row created.
+
+SQL>
+1 row created.
+
+SQL>
+1 row created.
+
+SQL> select *from library;
+
+   	BNO NAME     	AUTHOR         	ALLOWED_DAYS
+---------- -------------------- -------------------- ------------
+ 	1 DBMS     	Korth            	5
+ 	2 DM        	Kamber               	15
+ 	3 BI        	Kamber               	10
+
+SQL> create or replace trigger t1 before update or delete on library
+  2  for each row
+  3  begin
+  4  insert into lib_audit values(:new.bno,:old.allowed_days,:new.allowed_days);
+  5  end;
+  6  /
+
+Trigger created.
+
+SQL> update library set allowed_days=2 where bno=3;
+
+1 row updated.
+
+SQL> select *from lib_audit;
+
+   	BNO OLD_ALLOWED_DAYS	NEW_ALL_DAYS
+---------- -------------------- ------------
+ 	3 10               	2
+
+SQL> delete from library where bno=3;
+
+1 row deleted.
+
+SQL> select *from lib_audit;
+
+   	BNO OLD_ALLOWED_DAYS	NEW_ALL_DAYS
+---------- -------------------- ------------
+ 	3 10               	2
+   	2
+
+SQL> select *from library
+  2  ;
+
+   	BNO NAME     	AUTHOR         	ALLOWED_DAYS
+---------- -------------------- -------------------- ------------
+ 	1 DBMS     	Korth            	5
+ 	2 DM        	Kamber               	15
+
+SQL>
