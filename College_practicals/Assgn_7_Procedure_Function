@@ -1,0 +1,75 @@
+ SQL> create table st(roll number,marks number,class varchar2(15));
+
+Table created.
+
+SQL> insert into st values(1,45,'p');
+
+1 row created.
+
+SQL> insert into st values(2,77,'D');
+
+1 row created.
+
+SQL>  insert into st values(3,57,'HS');
+
+1 row created.
+
+SQL> select * from st; 
+
+      ROLL	MARKS CLASS
+---------- ---------- ---------------
+	 1	   45 p
+	 2	   77 D
+	 3	   57 HS
+
+
+SQL> set serveroutput on;
+
+SQL> Create or replace function che_roll(ro number) 
+return number is 
+mroll number(4); 
+begin 
+select roll into mroll from st where roll=ro; 
+return 1; 
+exception 
+when no_data_found then 
+return 0; 
+end; 
+  2    3    4    5    6    7    8    9   10   11  
+ 12  /
+
+Function created.
+
+
+SQL> Declare 
+ro number(4); 
+ch number(4); 
+Begin 
+ro:=&roll; 
+ch:=che_roll(ro); 
+if ch=1 then 
+dbms_output.put_line('Roll no. present'); 
+else 
+dbms_output.put_line('Roll no. not present'); 
+end if; 
+end; 
+  2    3    4    5    6    7    8    9   10   11   12   13  
+ 14  / 
+Enter value for roll: 4
+old   5: ro:=&roll;
+new   5: ro:=4;
+Roll no. not present
+
+PL/SQL procedure successfully completed.
+
+
+SQL> /
+Enter value for roll: 2
+old   5: ro:=&roll;
+new   5: ro:=2;
+Roll no. present
+
+PL/SQL procedure successfully completed.
+
+
+
