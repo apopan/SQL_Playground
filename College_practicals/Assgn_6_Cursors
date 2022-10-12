@@ -1,0 +1,256 @@
+(base) mmcoe@mmcoe-System-Product-Name:~$ sudo service oracle-xe start
+[sudo] password for mmcoe: 
+(base) mmcoe@mmcoe-System-Product-Name:~$ sqlplus sys as sysdba
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Sep 20 12:49:25 2022
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password: 
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table O_Roll_Call (Name, Roll_no);
+create table O_Roll_Call (Name, Roll_no)
+                          *
+ERROR at line 1:
+ORA-02263: need to specify the datatype for this column
+
+
+SQL> create table O_Roll_Call (Name char(100),Roll_no varchar2(10));
+
+Table created.
+
+SQL> desc O_Roll_Call;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME						    CHAR(100)
+ ROLL_NO					    VARCHAR2(10)
+
+SQL> insert into table values (Apoorv,'TC152');
+insert into table values (Apoorv,'TC152')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> insert into O_Roll_Call values (Apoorv,'TC152');
+insert into O_Roll_Call values (Apoorv,'TC152')
+                                *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into O_Roll_Call values ('Apoorv','TC152');
+
+1 row created.
+
+SQL> insert into O_Roll_Call values ('Atharv','TC146');
+
+1 row created.
+
+SQL> insert into O_Roll_Call values ('Deven','TC147');
+
+1 row created.
+
+SQL> insert into O_Roll_Call values ('Shardul','TC267');
+
+1 row created.
+
+SQL> insert into O_Roll_Call values ('Jaydatta','TC224');
+
+1 row created.
+
+SQL> select *from O_Roll_Call;
+
+NAME
+--------------------------------------------------------------------------------
+ROLL_NO
+----------
+Apoorv
+
+TC152
+
+Atharv
+
+TC146
+
+Deven
+
+NAME
+--------------------------------------------------------------------------------
+ROLL_NO
+----------
+
+TC147
+
+Shardul
+
+TC267
+
+Jaydatta
+
+
+NAME
+--------------------------------------------------------------------------------
+ROLL_NO
+----------
+TC224
+
+
+SQL> create table N_Roll_Call (Name char(20), Roll_no varchar2(20));
+
+Table created.
+
+SQL> desc N_Roll_Call;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME						    CHAR(20)
+ ROLL_NO					    VARCHAR2(20)
+
+SQL> insert into N_Roll_Call ('Deven','TC147');
+insert into N_Roll_Call ('Deven','TC147')
+                         *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into N_Roll_Call values ('Deven','TC147');
+
+1 row created.
+
+SQL> insert into N_Roll_Call values ('Shardul','TC267');
+
+1 row created.
+
+SQL> select *from N_Roll_Call;
+
+NAME		     ROLL_NO
+-------------------- --------------------
+Deven		     TC147
+Shardul 	     TC267
+
+SQL> Declare  
+  2  rno O_Roll_Call.Roll_no%type;
+sname O_Roll_Call.name%type;
+cursor c1 is select Roll_no,Name from O_Roll_Call where Roll_no not in(select Roll_no from N_Roll_Call);
+begin
+open c1;
+loop
+fetch c1 into rno,sname;
+exit when c1%NOTFOUND;
+insert into N_Roll_Call values(rno,sname);
+dbms_output.put_line('rno '|| rno || ' name '|| sname);
+  3  end loop;
+close c1;
+end;  4    5    6    7    8    9   10   11   12   13   14  /
+ 15  /
+end;/
+    *
+ERROR at line 14:
+ORA-06550: line 14, column 5:
+PLS-00103: Encountered the symbol "/" The symbol "/" was ignored.
+
+
+SQL> Declare
+  2  rno O_Roll_Call.Roll_no%type;
+sname O_Roll_Call.name%type;
+cursor c1 is select Roll_no,Name from O_Roll_Call where Roll_no not in(select Roll_no from N_Roll_Call);
+begin
+open c1;
+loop
+fetch c1 into rno,sname;
+exit when c1%NOTFOUND;
+insert int  3  o N_Roll_Call values(rno,sname);
+dbms_output.put_line('rno '|| rno || ' name '|| sname);
+end loop;
+close c1;
+end;  4    5    6    7    8    9   10   11   12   13   14  
+ 15  /
+Declare
+*
+ERROR at line 1:
+ORA-12899: value too large for column "SYS"."N_ROLL_CALL"."ROLL_NO" (actual:
+100, maximum: 20)
+ORA-06512: at line 10
+
+
+SQL> DECLARE
+  2  rno O_Roll_Call.Roll_no%type;
+sname O_Roll_Call.name%type;
+cursor c1 is select Roll_no,Name from O_Roll_Call where Roll_no not in(select Roll_no from N_Roll_Call);
+begin
+open c1;
+loop
+fetch c1 into rno,sname;
+exit when c1%NOTFOUND;
+insert into N_Roll_Call values(rno,sname);
+dbms_output.put_line('rno '|| rno || ' name '|| sname);
+end loop;
+close c1;
+end;  3    4    5    6    7    8    9   10   11   12   13   14  
+ 15  /
+DECLARE
+*
+ERROR at line 1:
+ORA-12899: value too large for column "SYS"."N_ROLL_CALL"."ROLL_NO" (actual:
+100, maximum: 20)
+ORA-06512: at line 10
+
+
+SQL> Alter table N_Roll_Call modify Roll_no varchar2(200);
+
+Table altered.
+
+SQL> Declare
+  2  rno O_Roll_Call.Roll_no%type;
+sname O_Roll_Call.name%type;
+cursor c1 is select Roll_no,Name from O_Roll_Call where Roll_no not in(select Roll_no from N_Roll_Call);
+begin
+open c1;
+loop
+fetch c1 into rno,sname;
+exit when c1%NOTFOUND;
+insert into N_Roll_Call values(rno,sname);
+dbms_output.  3  put_line('rno '|| rno || ' name '|| sname);
+end loop;
+close c1;
+end;  4    5    6    7    8    9   10   11   12   13   14  
+ 15  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select *from N_Roll_Call;
+
+NAME
+--------------------
+ROLL_NO
+--------------------------------------------------------------------------------
+Deven
+TC147
+
+Shardul
+TC267
+
+TC224
+Jaydatta
+
+
+NAME
+--------------------
+ROLL_NO
+--------------------------------------------------------------------------------
+
+TC152
+Apoorv
+
+
+TC146
+Atharv
+
+
+
+SQL> 
+
+\
