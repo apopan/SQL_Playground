@@ -1,0 +1,524 @@
+(base) mmcoe@mmcoe-System-Product-Name:~$ mongo
+MongoDB shell version: 2.6.10
+connecting to: test
+> show dbs
+admin  (empty)
+local  0.078GB
+manas  0.078GB
+test   0.078GB
+> use NoSQL_prac_assgn
+switched to db NoSQL_prac_assgn
+> db
+Nodb.Employee.insert({EmpID : 101, Emp_Name : "Apoorv", Emp_dept : "R&D", Emp_sal : 10000, Emp_age : 20
+[1]+  Stopped             	mongo
+(base) mmcoe@mmcoe-System-Product-Name:~$ mongo
+MongoDB shell version: 2.6.10
+connecting to: test
+> use NoSQL_prac_assgn
+switched to db NoSQL_prac_assgn
+> db
+NoSQL_prac_assgn
+> db.Employee.insert({EmpID : 101, Emp_Name : "Apoorv", Emp_dept : "R&D", Emp_sal : 10000, Emp_age : 20db.Employee.insert({EmpID : 101, Emp_Name : "Apoorv", Emp_dept : "R&D", Emp_sal : 10000, Emp_age : 20})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+> db.Employee.insert({EmpID : 102, Emp_Name : "Atharv", Emp_dept : "Development", Emp_sal : 15000, Emp_age : 21})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.insert({EmpID : 103, Emp_Name : "Deven", Emp_dept : "Management", Emp_sal : 25000, Emp_age : 19})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.insert({EmpID : 104, Emp_Name : "Joe", Emp_dept : "Production", Emp_sal : 5500, Emp_age : 24})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.insert({EmpID : 105, Emp_Name : "Shardul", Emp_dept : "Engineering", Emp_sal : 12500, Emp_age : 27})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.find()
+{ "_id" : ObjectId("6347a03691626be5eb28c93f"), "EmpID" : 101, "Emp_Name" : "Apoorv", "Emp_dept" : "R&D", "Emp_sal" : 10000, "Emp_age" : 20 }
+{ "_id" : ObjectId("6347a09591626be5eb28c940"), "EmpID" : 102, "Emp_Name" : "Atharv", "Emp_dept" : "Development", "Emp_sal" : 15000, "Emp_age" : 21 }
+{ "_id" : ObjectId("6347a0c391626be5eb28c941"), "EmpID" : 103, "Emp_Name" : "Deven", "Emp_dept" : "Management", "Emp_sal" : 25000, "Emp_age" : 19 }
+{ "_id" : ObjectId("6347a0fd91626be5eb28c942"), "EmpID" : 104, "Emp_Name" : "Joe", "Emp_dept" : "Production", "Emp_sal" : 5500, "Emp_age" : 24 }
+{ "_id" : ObjectId("6347a15691626be5eb28c943"), "EmpID" : 105, "Emp_Name" : "Shardul", "Emp_dept" : "Engineering", "Emp_sal" : 12500, "Emp_age" : 27 }
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a0fd91626be5eb28c942"),
+    "EmpID" : 104,
+    "Emp_Name" : "Joe",
+    "Emp_dept" : "Production",
+    "Emp_sal" : 5500,
+    "Emp_age" : 24
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+> var bulk = db.Employee.initializeUnorderedBulkOp();
+> bulk.insert({EmpID : 106, Emp_Name : "Jaydatta",  Emp_dept : "Content Creation", Emp_sal : 14000, Emp_age : 25})
+> bulk.insert({EmpID : 106, Emp_Name : "Vivek",  Emp_dept : "Finance", Emp_sal : 18000, Emp_age : 23})
+> bulk.insert({EmpID : 108, Emp_Name : "Soham",  Emp_dept : "R&D", Emp_sal : 13500, Emp_age : 20})
+> bulk.execute()
+BulkWriteResult({
+    "writeErrors" : [ ],
+    "writeConcernErrors" : [ ],
+    "nInserted" : 3,
+    "nUpserted" : 0,
+    "nMatched" : 0,
+    "nModified" : 0,
+    "nRemoved" : 0,
+    "upserted" : [ ]
+})
+> db.Employee.findoneandUpdate({Emp_Name = '106'},{$set:{EmpID = '107'}})
+2022-10-13T11:20:01.791+0530 SyntaxError: Unexpected token =
+> db.Employee.findoneandUpdate({Emp_Name : 'Vivek'},{$set:{EmpID = '107'}})
+2022-10-13T11:21:52.458+0530 SyntaxError: Unexpected token =
+> db.Employee.findoneandUpdate({Emp_Name : 'Vivek'},{$set:{EmpID : '107'}})
+2022-10-13T11:22:04.482+0530 TypeError: Property 'findoneandUpdate' of object NoSQL_prac_assgn.Employee is not a function
+> db.Employee.findOneAndUpdate({Emp_Name : 'Vivek'},{$set:{EmpID : '107'}})
+2022-10-13T11:22:35.538+0530 TypeError: Property 'findOneAndUpdate' of object NoSQL_prac_assgn.Employee is not a function
+> db.Employee.Update({Emp_Name : 'Vivek'},{$set:{EmpID : '107'}})
+2022-10-13T11:23:17.777+0530 TypeError: Property 'Update' of object NoSQL_prac_assgn.Employee is not a function
+> db.Employee.update({Emp_Name : 'Vivek'},{$set:{EmpID : '107'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a0fd91626be5eb28c942"),
+    "EmpID" : 104,
+    "Emp_Name" : "Joe",
+    "Emp_dept" : "Production",
+    "Emp_sal" : 5500,
+    "Emp_age" : 24
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c944"),
+    "EmpID" : 106,
+    "Emp_Name" : "Jaydatta",
+    "Emp_dept" : "Content Creation",
+    "Emp_sal" : 14000,
+    "Emp_age" : 25
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c945"),
+    "EmpID" : "107",
+    "Emp_Name" : "Vivek",
+    "Emp_dept" : "Finance",
+    "Emp_sal" : 18000,
+    "Emp_age" : 23
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c946"),
+    "EmpID" : 108,
+    "Emp_Name" : "Soham",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 13500,
+    "Emp_age" : 20
+}
+> db.Employee.save({ "id" : ObjectId("6347a41491626be5eb28c947"), "EmpID" = 109, "EmpID" : 108,
+... "Emp_Name" : "Soham",
+... "Emp_dept" : "R&D",
+... "Emp_sal" : 13500,
+... ^C
+
+> db.Employee.save({ "id" : ObjectId("6347a41491626be5eb28c947"), "EmpID" : 109, "Emp_Name" : "Aashish", "Emp_dept" : "Development", "Emp_sal" : 11300, "Emp_age" : 22})
+WriteResult({ "nInserted" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a0fd91626be5eb28c942"),
+    "EmpID" : 104,
+    "Emp_Name" : "Joe",
+    "Emp_dept" : "Production",
+    "Emp_sal" : 5500,
+    "Emp_age" : 24
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c944"),
+    "EmpID" : 106,
+    "Emp_Name" : "Jaydatta",
+    "Emp_dept" : "Content Creation",
+    "Emp_sal" : 14000,
+    "Emp_age" : 25
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c945"),
+    "EmpID" : "107",
+    "Emp_Name" : "Vivek",
+    "Emp_dept" : "Finance",
+    "Emp_sal" : 18000,
+    "Emp_age" : 23
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c946"),
+    "EmpID" : 108,
+    "Emp_Name" : "Soham",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 13500,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347aa6e91626be5eb28c947"),
+    "id" : ObjectId("6347a41491626be5eb28c947"),
+    "EmpID" : 109,
+    "Emp_Name" : "Aashish",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 11300,
+    "Emp_age" : 22
+}
+> db.Employee.find("Emp_Name" : "Joe", "Emp_age" : 25)
+2022-10-13T11:36:07.979+0530 SyntaxError: Unexpected token :
+> db.Employee.find({"Emp_Name" : "Joe", "Emp_age" : 25})
+> db.Employee.find({"Emp_Name" : "Joe"}, {"Emp_age" : 25})
+{ "_id" : ObjectId("6347a0fd91626be5eb28c942"), "Emp_age" : 24 }
+> db.Employee.find({Emp_Name : "Joe"}, {Emp_age : 25})
+{ "_id" : ObjectId("6347a0fd91626be5eb28c942"), "Emp_age" : 24 }
+> db.Employee.find({Emp_Name : "Joe"})
+{ "_id" : ObjectId("6347a0fd91626be5eb28c942"), "EmpID" : 104, "Emp_Name" : "Joe", "Emp_dept" : "Production", "Emp_sal" : 5500, "Emp_age" : 24 }
+> db.Employee.find({Emp_age : 25})
+{ "_id" : ObjectId("6347a41491626be5eb28c944"), "EmpID" : 106, "Emp_Name" : "Jaydatta", "Emp_dept" : "Content Creation", "Emp_sal" : 14000, "Emp_age" : 25 }
+> db.Employee.find({Emp_sal : >5000})
+2022-10-13T11:44:30.012+0530 SyntaxError: Unexpected token >
+> db.Employee.find({Emp_sal : {$gt : 5000}})
+{ "_id" : ObjectId("6347a03691626be5eb28c93f"), "EmpID" : 101, "Emp_Name" : "Apoorv", "Emp_dept" : "R&D", "Emp_sal" : 10000, "Emp_age" : 20 }
+{ "_id" : ObjectId("6347a09591626be5eb28c940"), "EmpID" : 102, "Emp_Name" : "Atharv", "Emp_dept" : "Development", "Emp_sal" : 15000, "Emp_age" : 21 }
+{ "_id" : ObjectId("6347a0c391626be5eb28c941"), "EmpID" : 103, "Emp_Name" : "Deven", "Emp_dept" : "Management", "Emp_sal" : 25000, "Emp_age" : 19 }
+{ "_id" : ObjectId("6347a0fd91626be5eb28c942"), "EmpID" : 104, "Emp_Name" : "Joe", "Emp_dept" : "Production", "Emp_sal" : 5500, "Emp_age" : 24 }
+{ "_id" : ObjectId("6347a15691626be5eb28c943"), "EmpID" : 105, "Emp_Name" : "Shardul", "Emp_dept" : "Engineering", "Emp_sal" : 12500, "Emp_age" : 27 }
+{ "_id" : ObjectId("6347a41491626be5eb28c944"), "EmpID" : 106, "Emp_Name" : "Jaydatta", "Emp_dept" : "Content Creation", "Emp_sal" : 14000, "Emp_age" : 25 }
+{ "_id" : ObjectId("6347a41491626be5eb28c945"), "EmpID" : "107", "Emp_Name" : "Vivek", "Emp_dept" : "Finance", "Emp_sal" : 18000, "Emp_age" : 23 }
+{ "_id" : ObjectId("6347a41491626be5eb28c946"), "EmpID" : 108, "Emp_Name" : "Soham", "Emp_dept" : "R&D", "Emp_sal" : 13500, "Emp_age" : 20 }
+{ "_id" : ObjectId("6347aa6e91626be5eb28c947"), "id" : ObjectId("6347a41491626be5eb28c947"), "EmpID" : 109, "Emp_Name" : "Aashish", "Emp_dept" : "Development", "Emp_sal" : 11300, "Emp_age" : 22 }
+> db.Employee.Update({Emp_Name : 'Joe'},{$set:{Emp_dept : 'Operation'}})
+2022-10-13T11:47:10.924+0530 TypeError: Property 'Update' of object NoSQL_prac_assgn.Employee is not a function
+> db.Employee.update({Emp_Name : 'Joe'},{$set:{Emp_dept : 'Operation'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.update({Emp_Name : 'Joe'},{$inc:{Emp_sal : 2000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a0fd91626be5eb28c942"),
+    "EmpID" : 104,
+    "Emp_Name" : "Joe",
+    "Emp_dept" : "Operation",
+    "Emp_sal" : 7500,
+    "Emp_age" : 24
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c944"),
+    "EmpID" : 106,
+    "Emp_Name" : "Jaydatta",
+    "Emp_dept" : "Content Creation",
+    "Emp_sal" : 14000,
+    "Emp_age" : 25
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c945"),
+    "EmpID" : "107",
+    "Emp_Name" : "Vivek",
+    "Emp_dept" : "Finance",
+    "Emp_sal" : 18000,
+    "Emp_age" : 23
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c946"),
+    "EmpID" : 108,
+    "Emp_Name" : "Soham",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 13500,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347aa6e91626be5eb28c947"),
+    "id" : ObjectId("6347a41491626be5eb28c947"),
+    "EmpID" : 109,
+    "Emp_Name" : "Aashish",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 11300,
+    "Emp_age" : 22
+}
+> db.Employee.update({Emp_Name : 'Joe'},{$addToSet:{Emp_mail : "joe50@gamil.com"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a0fd91626be5eb28c942"),
+    "EmpID" : 104,
+    "Emp_Name" : "Joe",
+    "Emp_dept" : "Operation",
+    "Emp_sal" : 7500,
+    "Emp_age" : 24,
+    "Emp_mail" : [
+   	 "joe50@gamil.com"
+    ]
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c944"),
+    "EmpID" : 106,
+    "Emp_Name" : "Jaydatta",
+    "Emp_dept" : "Content Creation",
+    "Emp_sal" : 14000,
+    "Emp_age" : 25
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c945"),
+    "EmpID" : "107",
+    "Emp_Name" : "Vivek",
+    "Emp_dept" : "Finance",
+    "Emp_sal" : 18000,
+    "Emp_age" : 23
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c946"),
+    "EmpID" : 108,
+    "Emp_Name" : "Soham",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 13500,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347aa6e91626be5eb28c947"),
+    "id" : ObjectId("6347a41491626be5eb28c947"),
+    "EmpID" : 109,
+    "Emp_Name" : "Aashish",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 11300,
+    "Emp_age" : 22
+}
+> db.Employee.delete({Emp_dept : 'Operation'})
+2022-10-13T11:54:37.515+0530 TypeError: Property 'delete' of object NoSQL_prac_assgn.Employee is not a function
+> db.Employee.remove({Emp_dept : 'Operation'})
+WriteResult({ "nRemoved" : 1 })
+> db.Employee.find().pretty()
+{
+    "_id" : ObjectId("6347a03691626be5eb28c93f"),
+    "EmpID" : 101,
+    "Emp_Name" : "Apoorv",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 10000,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347a09591626be5eb28c940"),
+    "EmpID" : 102,
+    "Emp_Name" : "Atharv",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 15000,
+    "Emp_age" : 21
+}
+{
+    "_id" : ObjectId("6347a0c391626be5eb28c941"),
+    "EmpID" : 103,
+    "Emp_Name" : "Deven",
+    "Emp_dept" : "Management",
+    "Emp_sal" : 25000,
+    "Emp_age" : 19
+}
+{
+    "_id" : ObjectId("6347a15691626be5eb28c943"),
+    "EmpID" : 105,
+    "Emp_Name" : "Shardul",
+    "Emp_dept" : "Engineering",
+    "Emp_sal" : 12500,
+    "Emp_age" : 27
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c944"),
+    "EmpID" : 106,
+    "Emp_Name" : "Jaydatta",
+    "Emp_dept" : "Content Creation",
+    "Emp_sal" : 14000,
+    "Emp_age" : 25
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c945"),
+    "EmpID" : "107",
+    "Emp_Name" : "Vivek",
+    "Emp_dept" : "Finance",
+    "Emp_sal" : 18000,
+    "Emp_age" : 23
+}
+{
+    "_id" : ObjectId("6347a41491626be5eb28c946"),
+    "EmpID" : 108,
+    "Emp_Name" : "Soham",
+    "Emp_dept" : "R&D",
+    "Emp_sal" : 13500,
+    "Emp_age" : 20
+}
+{
+    "_id" : ObjectId("6347aa6e91626be5eb28c947"),
+    "id" : ObjectId("6347a41491626be5eb28c947"),
+    "EmpID" : 109,
+    "Emp_Name" : "Aashish",
+    "Emp_dept" : "Development",
+    "Emp_sal" : 11300,
+    "Emp_age" : 22
+}
+> db.Employee.find().sort({KEY : 1})
+{ "_id" : ObjectId("6347a03691626be5eb28c93f"), "EmpID" : 101, "Emp_Name" : "Apoorv", "Emp_dept" : "R&D", "Emp_sal" : 10000, "Emp_age" : 20 }
+{ "_id" : ObjectId("6347a09591626be5eb28c940"), "EmpID" : 102, "Emp_Name" : "Atharv", "Emp_dept" : "Development", "Emp_sal" : 15000, "Emp_age" : 21 }
+{ "_id" : ObjectId("6347a0c391626be5eb28c941"), "EmpID" : 103, "Emp_Name" : "Deven", "Emp_dept" : "Management", "Emp_sal" : 25000, "Emp_age" : 19 }
+{ "_id" : ObjectId("6347a15691626be5eb28c943"), "EmpID" : 105, "Emp_Name" : "Shardul", "Emp_dept" : "Engineering", "Emp_sal" : 12500, "Emp_age" : 27 }
+{ "_id" : ObjectId("6347a41491626be5eb28c944"), "EmpID" : 106, "Emp_Name" : "Jaydatta", "Emp_dept" : "Content Creation", "Emp_sal" : 14000, "Emp_age" : 25 }
+{ "_id" : ObjectId("6347a41491626be5eb28c945"), "EmpID" : "107", "Emp_Name" : "Vivek", "Emp_dept" : "Finance", "Emp_sal" : 18000, "Emp_age" : 23 }
+{ "_id" : ObjectId("6347a41491626be5eb28c946"), "EmpID" : 108, "Emp_Name" : "Soham", "Emp_dept" : "R&D", "Emp_sal" : 13500, "Emp_age" : 20 }
+{ "_id" : ObjectId("6347aa6e91626be5eb28c947"), "id" : ObjectId("6347a41491626be5eb28c947"), "EmpID" : 109, "Emp_Name" : "Aashish", "Emp_dept" : "Development", "Emp_sal" : 11300, "Emp_age" : 22 }
+
+
+
