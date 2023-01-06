@@ -33,17 +33,21 @@ FROM City
 WHERE CountryCode = "JPN";
 
 
-## Weather Observations table 1 
+## Weather Observation Station 1 
 
 SELECT CITY, STATE
 FROM STATION
 ORDER BY CITY, STATE;
 
 
-## Weather Observations table 3
+## Weather Observation Station 3
 
 SELECT DISTINCT CITY
 FROM STATION
 WHERE (ID % 2) = 0
 ORDER BY CITY;
 
+
+## Weather Observation Station 4
+
+select (count(CITY) -  count(distinct CITY)) from STATION;
