@@ -51,3 +51,10 @@ ORDER BY CITY;
 ## Weather Observation Station 4
 
 select (count(CITY) -  count(distinct CITY)) from STATION;
+
+
+## Weather Observation Station 5
+
+select CITY, length(CITY) from STATION where length(CITY) in ( select max(length(CITY)) from STATION union select min(length(CITY))from STATION) order by
+   length(CITY) desc,
+   CITY asc limit 2;
