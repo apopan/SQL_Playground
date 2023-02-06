@@ -65,6 +65,13 @@ select CITY, length(CITY) from STATION where length(CITY) in ( select max(length
 select distinct CITY from STATION where lower(substr(CITY,1,1)) IN ('a','e','i','o','u'); 
 
 
-## Weathere Observation Station 7
+## Weather Observation Station 7
 
 select distinct CITY from station where lower(right(CITY,1)) IN ('a','e','i','o','u')
+
+
+## Weather Observatioin Station 8
+
+SELECT DISTINCT city
+FROM   station
+WHERE  city RLIKE '^[aeiouAEIOU].*[aeiouAEIOU]$'
