@@ -80,3 +80,8 @@ WHERE  city RLIKE '^[aeiouAEIOU].*[aeiouAEIOU]$'
 ## Weather Observation Station 9
 
 select distinct CITY from Station where lower(left(CITY,1)) not in ('a','e','i','o','u');
+
+
+## Weather Observation Station 10
+
+select distinct CITY from Station where lower(right(CITY,1)) not in ('a','e','i','o','u');
