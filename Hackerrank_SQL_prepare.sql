@@ -85,3 +85,10 @@ select distinct CITY from Station where lower(left(CITY,1)) not in ('a','e','i',
 ## Weather Observation Station 10
 
 select distinct CITY from Station where lower(right(CITY,1)) not in ('a','e','i','o','u');
+
+
+## Weather Observation Station 11
+
+SELECT DISTINCT city
+FROM   station
+WHERE  city NOT REGEXP '^[aeiouAEIOU].*[aeiouAEIOU]$' 
