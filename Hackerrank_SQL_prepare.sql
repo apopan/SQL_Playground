@@ -106,3 +106,6 @@ where not (city like 'A%' or city like 'E%' or city like 'I%' or city like 'O%' 
 select NAME from STUDENTS where MARKS > 75 order by RIGHT(NAME,3) asc,ID asc;
 
 
+## Employee names
+
+select name from Employee order by name asc;
