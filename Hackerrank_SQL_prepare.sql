@@ -109,3 +109,8 @@ select NAME from STUDENTS where MARKS > 75 order by RIGHT(NAME,3) asc,ID asc;
 ## Employee names
 
 select name from Employee order by name asc;
+
+
+## Employee salaries
+
+select name from Employee where salary > 2000 and months < 10 order by employee_id asc;
